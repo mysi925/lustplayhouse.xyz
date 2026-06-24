@@ -1,37 +1,29 @@
 import express from "express";
-import { Client, Environment } from "square";
-import crypto from "crypto";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
+
+app.use(cors());
 app.use(express.json());
 
-const client = new Client({
-  accessToken: process.env.SQUARE_ACCESS_TOKEN,
-  environment: Environment.Sandbox,
+// needed for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// serve frontend
+app.use(express.static(path.join(__dirname, "dist")));
+
+// API route
+app.post("/pay", (req, res) => {
+  res.json({ ok: true });
 });
 
-app.post("/pay", async (req, res) => {
-  try {
-    const { token } = req.body;
-
-    const response = await client.paymentsApi.createPayment({
-      sourceId: token,
-      amountMoney: {
-        amount: 1000,
-        currency: "USD",
-      },
-      idempotencyKey: crypto.randomUUID(),
-    });
-
-    res.json(response.result);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Payment failed");
-  }
+// IMPORTANT: catch-all route for React
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log("Server running"));
-import cors from "cors";
-
-app.use(cors());
