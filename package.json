@@ -41,3 +41,8 @@
   "cors": "^2.8.5",
   "square": "^39.0.0"
 }
+"scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "start": "node server.js"
+}
