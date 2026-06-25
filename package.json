@@ -37,3 +37,6 @@
     "@/*": "./src/components/ui/$1"
   }
 }
+"engines": {
+  "node": "18"
+}
