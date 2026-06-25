@@ -12,18 +12,18 @@ app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// serve frontend
+// 🧠 SERVE FRONTEND (THIS IS THE FIX)
 app.use(express.static(path.join(__dirname, "dist")));
 
-// API route
+// 💳 API ROUTE
 app.post("/pay", (req, res) => {
   res.json({ ok: true });
 });
 
-// IMPORTANT: catch-all route for React
+// ⚠️ IMPORTANT: send React for all routes
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log("Server running"));
+app.listen(PORT, () => console.log("Running on", PORT));
