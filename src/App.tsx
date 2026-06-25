@@ -3,7 +3,7 @@ import { Background } from "@/components/Background";
 import { MainContent } from "@/sections/MainContent";
 import { CryptoModal } from "@/components/CryptoModal";
 
-export const App = () => {
+const App = () => {
   // 💳 PAYMENT HANDLER
   const handlePayment = async () => {
     try {
